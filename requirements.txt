@@ -6,3 +6,4 @@ aeon
 scikit-learn
 pandas
 dtaidistance
+tqdm
