@@ -20,9 +20,23 @@ https://arxiv.org/abs/2010.08354
 """
 
 import functools
-import numba
 import numpy as np
 from scipy.optimize import minimize
+
+try:
+  import numba  # type: ignore
+except ModuleNotFoundError:  # pragma: no cover
+  class _NumbaDummy:
+    def njit(self, *args, **kwargs):
+      if args and callable(args[0]) and len(args) == 1 and not kwargs:
+        return args[0]
+
+      def _decorator(func):
+        return func
+
+      return _decorator
+
+  numba = _NumbaDummy()  # type: ignore
 
 
 @numba.njit

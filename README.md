@@ -23,6 +23,54 @@ value, grad = sdtw_div_value_and_grad(X, Y, gamma=1.0)
 Similarly, we can use `sharp_sdtw_div`, `sharp_sdtw_div_value_and_grad`,
 `mean_cost_div` and `mean_cost_div_value_and_grad`.
 
+Project structure
+-----------------
+
+- Core library: `sdtw_div/`
+  - Soft-DTW and divergences: `sdtw_div/numba_ops.py`
+  - Optional DTW baseline wrapper: `sdtw_div/dtw_baseline.py`
+  - Airline Passengers experiments: `sdtw_div/airline_experiments.py`
+- Report template: `task.tex`
+- Figures/results are written to `figures/` and `results/` when running experiments.
+
+Setup
+-----
+
+Required:
+- Python 3
+- `numpy`, `scipy`, `matplotlib`
+
+Optional (speed):
+- `numba` (for JIT acceleration)
+
+Optional (DTW baseline):
+- `dtaidistance` or `tslearn`
+
+Steps to run experiments (Airline Passengers)
+---------------------------------------------
+
+1) Run the experiment pipeline:
+```bash
+python3 - <<'PY'
+from sdtw_div.airline_experiments import run_airline_experiments
+run_airline_experiments()
+PY
+```
+
+2) Inspect outputs:
+- Figures in `figures/` (barycenters + bias demo + raw/normalized data)
+- Metrics in `results/airline_metrics.json` and `results/airline_metrics.txt`
+
+3) (Optional) Use a classic DTW baseline (requires a package):
+```python
+from sdtw_div.dtw_baseline import dtw_distance
+import numpy as np
+
+x = np.arange(5)
+y = np.arange(7)
+print(dtw_distance(x, y, backend="dtaidistance"))
+```
+
 Install
 --------
 
