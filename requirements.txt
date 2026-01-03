@@ -7,3 +7,4 @@ scikit-learn
 pandas
 dtaidistance
 tqdm
+jinja2
